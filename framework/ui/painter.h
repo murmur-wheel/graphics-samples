@@ -17,10 +17,6 @@ struct RectF {
   float left = 0, top = 0, right = 0, bottom = 0;
 };
 
-struct ColorF {
-  float r = 0.0f, g = 0.0f, b = 0.0f, a = 0.0f;
-};
-
 struct DrawCommandList {
   struct DrawCommand {
     uint32_t first_vertex = 0;
