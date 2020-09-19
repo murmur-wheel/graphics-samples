@@ -2,6 +2,6 @@
 // Created by murmur wheel on 2020/9/12.
 //
 
-#include "painter.h"
+#include "ui_widget.h"
 
 namespace framework {}

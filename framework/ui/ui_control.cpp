@@ -2,8 +2,8 @@
 // Created by murmur wheel on 2020/9/12.
 //
 
-#include "control.h"
+#include "ui_control.h"
 
 namespace framework {
-void Control::on_click() {}
+void UiControl::on_click() {}
 }  // namespace framework

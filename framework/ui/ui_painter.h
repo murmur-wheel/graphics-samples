@@ -17,7 +17,7 @@ struct RectF {
   float left = 0, top = 0, right = 0, bottom = 0;
 };
 
-struct DrawCommandList {
+struct UiDrawCommandList {
   struct DrawCommand {
     uint32_t first_vertex = 0;
     uint32_t first_index = 0;
@@ -36,7 +36,7 @@ struct DrawCommandList {
   std::vector<uint16_t> indices;
 };
 
-class Painter {
+class UiPainter {
  public:
   void push_clip(const RectF& rect);
   void pop_clip();
@@ -45,12 +45,12 @@ class Painter {
   void fill_rectangle(const RectF& rect, const Vec4f& color,
                       float stroke_width = 1.0f);
 
-  const DrawCommandList& draw_command_list() const {
+  const UiDrawCommandList& draw_command_list() const {
     return draw_command_list_;
   }
 
  private:
-  DrawCommandList draw_command_list_;
+  UiDrawCommandList draw_command_list_;
 };
 }  // namespace framework
 

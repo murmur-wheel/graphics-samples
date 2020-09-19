@@ -7,11 +7,11 @@
 
 #include <cstdint>
 
-#include "painter.h"
+#include "ui_painter.h"
 
 namespace framework {
 
-class Widget {
+class UiWidget {
  public:
   struct Extent {
     uint32_t width = 0;
@@ -44,7 +44,7 @@ class Widget {
 
   virtual Extent measure(const MeasureSpec& spec) = 0;
   virtual void layout(const Rect& region) = 0;
-  virtual void draw(Painter& painter) = 0;
+  virtual void draw(UiPainter& painter) = 0;
 
   void set_event_flag(uint32_t flag) { event_flags_ = event_flags_ | flag; }
   void remove_event_flag(uint32_t flag) {

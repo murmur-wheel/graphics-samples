@@ -5,10 +5,10 @@
 #ifndef FRAMEWORK_UI_CONTROL_H
 #define FRAMEWORK_UI_CONTROL_H
 
-#include "widget.h"
+#include "ui_widget.h"
 
 namespace framework {
-class Control : public Widget {
+class UiControl : public UiWidget {
  public:
   virtual void on_click() = 0;
 };
