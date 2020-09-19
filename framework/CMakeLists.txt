@@ -5,8 +5,12 @@ set(INPUT_SOURCES
 
 set(MATH_SOURCE_LIST
         math/color.h
-        math/vector.h
-        )
+        math/vector.h)
+
+set(PLATFORM_SOURCE_LIST
+        platform/platform_window.h
+        platform/platform.h
+        platform/platform.cpp)
 
 set(VKUT_SOURCE_LIST
         vkut/vkut_tools.h
@@ -16,9 +20,12 @@ set(VKUT_SOURCE_LIST
         vkut/vkut_instance.cpp
         vkut/vkut_device.h
         vkut/vkut_device.cpp
+        vkut/vkut_swapchain.h
+        vkut/vkut_swapchain.cpp
         vkut/vkut_buffer.h
         vkut/vkut_buffer.cpp
-        vkut/vkut.h)
+        vkut/vkut.h
+        vkut/vkut.cpp)
 
 set(UI_SOURCES
         ui/ui_painter.h
@@ -28,7 +35,10 @@ set(UI_SOURCES
         ui/ui_control.h
         ui/ui_control.cpp)
 
-add_library(framework STATIC ${VKUT_SOURCE_LIST} ${INPUT_SOURCES} ${UI_SOURCES})
+add_library(framework STATIC
+        ${PLATFORM_SOURCE_LIST}
+        ${VKUT_SOURCE_LIST}
+        ${INPUT_SOURCES} ${UI_SOURCES})
 target_link_libraries(framework 3rdparty_stub)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")

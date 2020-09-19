@@ -25,8 +25,8 @@ bool VkutDevice::init(VkutInstancePtr instance, const Options *options) {
 
   auto physical_devices = instance_->enumerate_physical_devices();
 
-  vkut_init_DeviceApi(vk_device_, instance_->instance_api().vkGetDeviceProcAddr,
-                      &device_api_);
+  vkut_InitDeviceApi(vk_device_, instance_->instance_api().vkGetDeviceProcAddr,
+                     &device_api_);
 
   return true;
 }

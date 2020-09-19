@@ -82,7 +82,7 @@ std::shared_ptr<VkutInstance> VkutInstance::Create(const Options *options) {
 
 bool VkutInstance::init(const Options *options) {
   auto loader = VkutApiLoader::Get();
-  vkut_init_RegisteryApi(loader->vkGetInstanceProcAddr, &registry_api_);
+  vkut_InitRegistryApi(loader->vkGetInstanceProcAddr, &registry_api_);
 
   std::vector<std::string> enabled_layers;
   std::vector<std::string> enabled_extensions;
@@ -96,14 +96,14 @@ bool VkutInstance::init(const Options *options) {
   VkInstanceCreateInfo instance_create_info = {};
   instance_create_info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
   instance_create_info.enabledLayerCount = layer_c_str.size();
-  instance_create_info.ppEnabledExtensionNames = layer_c_str.data();
+  instance_create_info.ppEnabledLayerNames = layer_c_str.data();
   instance_create_info.enabledExtensionCount = extension_c_str.size();
   instance_create_info.ppEnabledExtensionNames = extension_c_str.data();
   VKUT_CHECK_RESULT(registry_api_.vkCreateInstance(&instance_create_info,
                                                    nullptr, &vk_instance_));
 
-  vkut_init_InstanceApi(vk_instance_, registry_api_.vkGetInstanceProcAddr,
-                        &instance_api_);
+  vkut_InitInstanceApi(vk_instance_, registry_api_.vkGetInstanceProcAddr,
+                       &instance_api_);
 
   return true;
 }

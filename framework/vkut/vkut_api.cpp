@@ -43,8 +43,8 @@ VkutApiLoader* VkutApiLoader::Get() {
   return &loader;
 }
 
-void vkut_init_RegisteryApi(PFN_vkGetInstanceProcAddr getInstanceProcAddr,
-                            VkutRegistryApi* api) {
+void vkut_InitRegistryApi(PFN_vkGetInstanceProcAddr getInstanceProcAddr,
+                          VkutRegistryApi* api) {
   api->vkGetInstanceProcAddr = getInstanceProcAddr;
 
 #define BIND_PROC(NAME) \
@@ -55,9 +55,9 @@ void vkut_init_RegisteryApi(PFN_vkGetInstanceProcAddr getInstanceProcAddr,
 #undef BIND_PROC
 }
 
-void vkut_init_InstanceApi(VkInstance instance,
-                           PFN_vkGetInstanceProcAddr getInstanceProcAddr,
-                           VkutInstanceApi* api) {
+void vkut_InitInstanceApi(VkInstance instance,
+                          PFN_vkGetInstanceProcAddr getInstanceProcAddr,
+                          VkutInstanceApi* api) {
   api->vkGetInstanceProcAddr = getInstanceProcAddr;
 
 #define BIND_PROC(NAME) \
@@ -69,9 +69,9 @@ void vkut_init_InstanceApi(VkInstance instance,
 #undef BIND_PROC
 }
 
-void vkut_init_DeviceApi(VkDevice device,
-                         PFN_vkGetDeviceProcAddr getDeviceProcAddr,
-                         VkutDeviceApi* api) {
+void vkut_InitDeviceApi(VkDevice device,
+                        PFN_vkGetDeviceProcAddr getDeviceProcAddr,
+                        VkutDeviceApi* api) {
   api->vkGetDeviceProcAddr = getDeviceProcAddr;
 
 #define BIND_PROC(NAME) \

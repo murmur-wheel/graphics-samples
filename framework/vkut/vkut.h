@@ -7,7 +7,16 @@
 
 #include "vkut_api.h"
 #include "vkut_buffer.h"
+#include "vkut_device.h"
 #include "vkut_instance.h"
+#include "vkut_swapchain.h"
 #include "vkut_tools.h"
+
+namespace framework {
+void vkut_CreateDeviceAndSwapchain(const VkutInstancePtr& instance,
+                                   VkSurfaceKHR surface,
+                                   VkutDevicePtr* out_device,
+                                   VkutSwapchainPtr* out_swapchain);
+}  // namespace framework
 
 #endif  // FRAMEWORK_VKUT_H
