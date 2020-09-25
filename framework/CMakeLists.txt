@@ -1,13 +1,11 @@
-set(INPUT_SOURCES
-        input/mouse_event.h
-        input/input.h
-        input/input.cpp)
-
 set(MATH_SOURCE_LIST
         math/color.h
         math/vector.h)
 
 set(PLATFORM_SOURCE_LIST
+        platform/mouse_event.h
+        platform/input.h
+        platform/input.cpp
         platform/platform_window.h
         platform/platform.h
         platform/platform.cpp)
@@ -36,9 +34,10 @@ set(UI_SOURCES
         ui/ui_control.cpp)
 
 add_library(framework STATIC
+        ${MATH_SOURCE_LIST}
         ${PLATFORM_SOURCE_LIST}
         ${VKUT_SOURCE_LIST}
-        ${INPUT_SOURCES} ${UI_SOURCES})
+        ${UI_SOURCES})
 target_link_libraries(framework 3rdparty_stub)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")

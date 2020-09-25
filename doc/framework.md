@@ -24,8 +24,6 @@ auto image = AssetManager::Get()->acquire<Image>("image.png");
 AssetManager::Get()->release(image);
 ```
 
-## input
-
 ## platform
 
 平台抽象
