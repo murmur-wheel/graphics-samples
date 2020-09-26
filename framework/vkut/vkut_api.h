@@ -10,12 +10,12 @@
 
 namespace framework {
 // singleton
-class VkutApiLoader {
+class VkutApiLibrary {
  public:
-  VkutApiLoader();
-  ~VkutApiLoader();
+  VkutApiLibrary();
+  ~VkutApiLibrary();
 
-  static VkutApiLoader* Get();
+  static VkutApiLibrary* Get();
 
   PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr{nullptr};
 
@@ -39,14 +39,19 @@ struct VkutInstanceApi {
   PFN_vkGetDeviceProcAddr vkGetDeviceProcAddr{nullptr};
 };
 
-struct VkutSurfaceApi {};
+struct VkutSurfaceApi {
+  PFN_vkDestroySurfaceKHR vkDestroySurfaceKHR{nullptr};
+};
 
 struct VkutDeviceApi {
   PFN_vkGetDeviceProcAddr vkGetDeviceProcAddr{nullptr};
   PFN_vkDestroyDevice vkDestroyDevice{nullptr};
 };
 
-struct VkutSwapchainApi {};
+struct VkutSwapchainApi {
+  PFN_vkCreateSwapchainKHR vkCreateSwapchainKHR{nullptr};
+  PFN_vkDestroySwapchainKHR vkDestroySwapchainKHR{nullptr};
+};
 
 void vkut_InitRegistryApi(PFN_vkGetInstanceProcAddr getInstanceProcAddr,
                           VkutRegistryApi* api);

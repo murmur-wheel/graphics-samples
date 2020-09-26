@@ -10,45 +10,26 @@
 #include "vkut_tools.h"
 
 namespace framework {
-static void prepare_instance_layers(const VkutRegistryApi &api,
-                                    const VkutInstance::Options *options,
-                                    std::vector<std::string> &layers) {
-  uint32_t property_count = 0;
-  api.vkEnumerateInstanceLayerProperties(&property_count, nullptr);
-
-  std::vector<VkLayerProperties> layer_properties(property_count);
-  api.vkEnumerateInstanceLayerProperties(&property_count,
-                                         layer_properties.data());
-
-  if (options && options->debug_enable) {
-    const char *debug_layer = "VK_LAYER_LUNARG_standard_validation";
-    for (const auto &layer : layer_properties) {
-      if (strcmp(debug_layer, layer.layerName) == 0) {
-        layers.emplace_back(debug_layer);
-        break;
-      }
-    }
-  }
+static VkutInstance::Options* get_default_options() {
+  static VkutInstance::Options options;
+  options.enabled_layers.emplace_back("");
+  return &options;
 }
 
-static void prepare_instance_extensions(const VkutRegistryApi &api,
-                                        const VkutInstance::Options *options,
-                                        std::vector<std::string> &extensions) {
-  uint32_t property_count = 0;
-  api.vkEnumerateInstanceExtensionProperties(nullptr, &property_count, nullptr);
-
-  std::vector<VkExtensionProperties> extension_properties(property_count);
-  api.vkEnumerateInstanceExtensionProperties(nullptr, &property_count,
-                                             extension_properties.data());
-  std::vector<const char *> expected_extensions = {
-      VK_KHR_SURFACE_EXTENSION_NAME,
-  };
+static bool validate_instance_layers(const VkutRegistryApi& api,
+                                     const std::vector<std::string>& layers) {
+  return true;
 }
 
-static std::vector<const char *> as_c_str(const std::vector<std::string> &l) {
-  std::vector<const char *> res;
+static bool validate_instance_extensions(
+    const VkutRegistryApi& api, const std::vector<std::string>& extensions) {
+  return true;
+}
+
+static std::vector<const char*> as_c_str(const std::vector<std::string>& l) {
+  std::vector<const char*> res;
   res.reserve(l.size());
-  for (const auto &t : l) {
+  for (const auto& t : l) {
     res.push_back(t.c_str());
   }
   return res;
@@ -72,7 +53,7 @@ std::vector<VkPhysicalDevice> VkutInstance::enumerate_physical_devices() const {
   return physical_devices;
 }
 
-std::shared_ptr<VkutInstance> VkutInstance::Create(const Options *options) {
+std::shared_ptr<VkutInstance> VkutInstance::Create(const Options* options) {
   auto instance = std::make_shared<VkutInstance>();
   if (!instance->init(options)) {
     return nullptr;
@@ -80,25 +61,32 @@ std::shared_ptr<VkutInstance> VkutInstance::Create(const Options *options) {
   return instance;
 }
 
-bool VkutInstance::init(const Options *options) {
-  auto loader = VkutApiLoader::Get();
+bool VkutInstance::init(const Options* options) {
+  if (!options) {
+    options = get_default_options();
+  }
+
+  auto* loader = VkutApiLibrary::Get();
   vkut_InitRegistryApi(loader->vkGetInstanceProcAddr, &registry_api_);
 
-  std::vector<std::string> enabled_layers;
-  std::vector<std::string> enabled_extensions;
+  if (!validate_instance_layers(registry_api_, options->enabled_layers) ||
+      !validate_instance_extensions(registry_api_,
+                                    options->enabled_extensions)) {
+    return false;
+  }
 
-  prepare_instance_layers(registry_api_, options, enabled_layers);
-  prepare_instance_extensions(registry_api_, options, enabled_extensions);
-
-  std::vector<const char *> layer_c_str = as_c_str(enabled_layers);
-  std::vector<const char *> extension_c_str = as_c_str(enabled_extensions);
+  std::vector<const char*> layer_c_str = as_c_str(options->enabled_layers);
+  std::vector<const char*> extension_c_str =
+      as_c_str(options->enabled_extensions);
 
   VkInstanceCreateInfo instance_create_info = {};
+  // clang-format off
   instance_create_info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-  instance_create_info.enabledLayerCount = layer_c_str.size();
+  instance_create_info.enabledLayerCount = static_cast<uint32_t>(layer_c_str.size());
   instance_create_info.ppEnabledLayerNames = layer_c_str.data();
-  instance_create_info.enabledExtensionCount = extension_c_str.size();
+  instance_create_info.enabledExtensionCount = static_cast<uint32_t>(extension_c_str.size());
   instance_create_info.ppEnabledExtensionNames = extension_c_str.data();
+  // clang-format on
   VKUT_CHECK_RESULT(registry_api_.vkCreateInstance(&instance_create_info,
                                                    nullptr, &vk_instance_));
 

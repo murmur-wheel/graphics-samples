@@ -5,41 +5,33 @@
 #include "vkut_api.h"
 
 namespace framework {
-
-struct VkutLibraryLoaderData {
-  PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr{nullptr};
-
-  // windows platform
 #ifdef VK_USE_PLATFORM_WIN32_KHR
+struct VkutWin32LibraryData {
   HMODULE library_module{nullptr};
-
-  VkutLibraryLoaderData() {
+  PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr{nullptr};
+  VkutWin32LibraryData() {
     // clang-format off
-    library_module = LoadLibrary(TEXT("vulkan-1.dll"));
-    vkGetInstanceProcAddr = reinterpret_cast<PFN_vkGetInstanceProcAddr>(GetProcAddress(library_module, "vkGetInstanceProcAddr"));
+            library_module = LoadLibrary(TEXT("vulkan-1.dll"));
+            vkGetInstanceProcAddr = reinterpret_cast<PFN_vkGetInstanceProcAddr>(GetProcAddress(library_module, "vkGetInstanceProcAddr"));
     // clang-format on
   }
-
-  ~VkutLibraryLoaderData() { FreeLibrary(library_module); }
+  ~VkutWin32LibraryData() { FreeLibrary(library_module); }
+};
+using VkutLibraryData = VkutWin32LibraryData;
 #endif
 
-  // TODO: android
-
-  // TODO: linux
-};
-
-VkutApiLoader::VkutApiLoader() {
-  data_ = new VkutLibraryLoaderData;
-  auto ptr = reinterpret_cast<VkutLibraryLoaderData*>(data_);
+VkutApiLibrary::VkutApiLibrary() {
+  data_ = new VkutLibraryData;
+  auto* ptr = static_cast<VkutLibraryData*>(data_);
   vkGetInstanceProcAddr = ptr->vkGetInstanceProcAddr;
 }
 
-VkutApiLoader::~VkutApiLoader() {
-  delete reinterpret_cast<VkutLibraryLoaderData*>(data_);
+VkutApiLibrary::~VkutApiLibrary() {
+  delete static_cast<VkutLibraryData*>(data_);
 }
 
-VkutApiLoader* VkutApiLoader::Get() {
-  static VkutApiLoader loader;
+VkutApiLibrary* VkutApiLibrary::Get() {
+  static VkutApiLibrary loader;
   return &loader;
 }
 

@@ -6,6 +6,7 @@
 #define FRAMEWORK_VKUT_INSTANCE_H
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "vkut_api.h"
@@ -14,7 +15,8 @@ namespace framework {
 class VkutInstance {
  public:
   struct Options {
-    bool debug_enable = false;
+    std::vector<std::string> enabled_layers;
+    std::vector<std::string> enabled_extensions;
   };
 
   VkutInstance() = default;
