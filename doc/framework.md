@@ -28,6 +28,8 @@ AssetManager::Get()->release(image);
 
 平台抽象
 
+输入输出
+
 ## math
 
 数学库

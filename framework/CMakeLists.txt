@@ -2,6 +2,12 @@ set(MATH_SOURCE_LIST
         math/color.h
         math/vector.h)
 
+set(UTIL_SOURCE_LIST
+        util/event.h
+        util/event.cpp
+        util/ref_count.h
+        util/ref_count.cpp)
+
 set(PLATFORM_SOURCE_LIST
         platform/mouse_event.h
         platform/input.h
@@ -34,6 +40,7 @@ set(UI_SOURCES
         ui/ui_control.cpp)
 
 add_library(framework STATIC
+        ${UTIL_SOURCE_LIST}
         ${MATH_SOURCE_LIST}
         ${PLATFORM_SOURCE_LIST}
         ${VKUT_SOURCE_LIST}

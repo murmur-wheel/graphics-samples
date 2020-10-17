@@ -1,15 +1,24 @@
 //
-// Created by murmu on 2020/9/19.
+// Created by murmur wheel on 2020/9/19.
 //
 
-#include <vkut/vkut_api.h>
+#include <util/ref_count.h>
 #include <vkut/vkut_device.h>
-#include <vkut/vkut_instance.h>
 
 #include <cstdio>
 
+namespace fw = framework;
+
+class MyObject final : public fw::RefCount {
+ public:
+  ~MyObject() override { printf("MyObject::~MyObject()\n"); }
+};
+
 int main() {
-  auto instance = framework::VkutInstance::Create(nullptr);
-  auto device = framework::VkutDevice::Create(instance, nullptr);
-  device->device_api().vkDestroyDevice(nullptr, nullptr);
+  const auto dx = [](MyObject* obj) { delete obj; };
+
+  fw::RefPtr<MyObject, decltype(dx)> ptr(new MyObject, dx);
+
+  ptr->add_ref();
+  ptr->sub_ref();
 }
