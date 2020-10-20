@@ -3,10 +3,12 @@ set(MATH_SOURCE_LIST
         math/vector.h)
 
 set(UTIL_SOURCE_LIST
-        util/event.h
-        util/event.cpp
+        util/util_common.h
+        util/wait_group.h
         util/ref_count.h
-        util/ref_count.cpp)
+        util/event_queue.h
+        util/event_queue.cpp
+        util/util.h)
 
 set(PLATFORM_SOURCE_LIST
         platform/mouse_event.h

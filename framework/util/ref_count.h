@@ -7,13 +7,12 @@
 
 #include <type_traits>
 
-#include "macros.h"
+#include "util_common.h"
 
 namespace framework {
 class RefCount {
  public:
-  DISABLE_COPY_AND_MOVE(RefCount)
-
+  RefCount() = default;
   virtual ~RefCount() = default;
 
   int add_ref() { return ++count_; }
@@ -21,6 +20,8 @@ class RefCount {
 
  private:
   int count_{1};
+
+  DISABLE_COPY_AND_MOVE(RefCount)
 };
 
 template <typename T>
