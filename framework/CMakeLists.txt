@@ -22,7 +22,7 @@ set(PLATFORM_SOURCE_LIST
 source_group(platform FILES ${PLATFORM_SOURCE_LIST})
 
 set(VKUT_SOURCE_LIST
-        vkut/vkut_tools.h
+        vkut/common.h
         vkut/vkut_api.h
         vkut/vkut_api.cpp
         vkut/vkut_instance.h

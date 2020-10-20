@@ -1,13 +1,12 @@
 //
-// Created by murmur wheel on 2020/9/19.
+// Created by murmur-wheel on 2020/10/18.
 //
 
-#ifndef FRAMEWORK_VKUT_TOOLS_H
-#define FRAMEWORK_VKUT_TOOLS_H
+#ifndef FRAMEWORK_VKUT_COMMON_H
+#define FRAMEWORK_VKUT_COMMON_H
 
-#include <stdexcept>
-
-#include "vkut_api.h"
+#define VK_NO_PROTOTYPES
+#include <vulkan/vulkan.h>
 
 #define VKUT_CHECK_RESULT(EXPR) \
   do {                          \
@@ -17,4 +16,4 @@
     }                           \
   } while (false)
 
-#endif  // FRAMEWORK_VKUT_TOOLS_H
+#endif

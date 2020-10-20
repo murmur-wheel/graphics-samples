@@ -5,8 +5,7 @@
 #ifndef FRAMEWORK_VK_API_LOADER_H
 #define FRAMEWORK_VK_API_LOADER_H
 
-#define VK_NO_PROTOTYPES
-#include <vulkan/vulkan.h>
+#include "common.h"
 
 namespace framework {
 // singleton

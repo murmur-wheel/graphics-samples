@@ -7,8 +7,6 @@
 #include <string>
 #include <vector>
 
-#include "vkut_tools.h"
-
 namespace framework {
 static VkutInstance::Options* get_default_options() {
   static VkutInstance::Options options;
