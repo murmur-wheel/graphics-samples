@@ -1,6 +1,7 @@
 set(MATH_SOURCE_LIST
         math/color.h
-        math/vector.h)
+        math/vector.h
+        math/matrix.h)
 source_group(math FILES ${MATH_SOURCE_LIST})
 
 set(UTIL_SOURCE_LIST

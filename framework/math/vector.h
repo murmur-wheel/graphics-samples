@@ -50,6 +50,9 @@ struct Vec3T {
   explicit Vec3T(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
   explicit Vec3T(const Vec2T<T>& v, T _z) : x(v.x), y(v.y), z(_z) {}
 
+  T& operator[](int i) { return (&x)[i]; }
+  const T& operator[](int i) const { return (&x)[i]; }
+
   Vec3T<T> operator+(const Vec3T<T>& rhs) const {
     return Vec3T<T>(x + rhs.x, y + rhs.y, z + rhs.z);
   }
