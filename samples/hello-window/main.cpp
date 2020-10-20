@@ -2,6 +2,7 @@
 // Created by murmur wheel on 2020/9/19.
 //
 
+#include <math/vector.h>
 #include <util/ref_count.h>
 #include <vkut/vkut_device.h>
 
@@ -15,10 +16,7 @@ class MyObject final : public fw::RefCount {
 };
 
 int main() {
-  const auto dx = [](MyObject* obj) { delete obj; };
-
-  fw::RefPtr<MyObject, decltype(dx)> ptr(new MyObject, dx);
-
-  ptr->add_ref();
-  ptr->sub_ref();
+  const framework::Vec2f v2f(1, 2);
+  const auto sum2f = v2f + v2f;
+  printf("sum = [%f, %f]\n", sum2f.x, sum2f.y);
 }
