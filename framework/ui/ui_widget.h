@@ -7,6 +7,7 @@
 
 #include <cstdint>
 
+#include "common.h"
 #include "ui_painter.h"
 
 namespace framework {
@@ -20,20 +21,11 @@ inline uint32_t ui_get_spec_mode(uint32_t spec) {
   return spec & UI_SPEC_MODE_MASK;
 }
 inline uint32_t ui_get_spec_size(uint32_t spec) {
-  return spec & (~UI_SPEC_MODE_MASK);
+  return spec & ~UI_SPEC_MODE_MASK;
 }
 inline uint32_t ui_make_spec(uint32_t mode, uint32_t size) {
   return mode | size;
 }
-
-struct UiExtent {
-  uint32_t width = 0;
-  uint32_t height = 0;
-};
-
-struct UiRect {
-  uint32_t left = 0, top = 0, right = 0, bottom = 0;
-};
 
 struct UiWidgetSpec {
   uint32_t width_spec = 0;
@@ -42,26 +34,30 @@ struct UiWidgetSpec {
 
 class UiWidget {
  public:
+  static const uint32_t UI_FLAG_DIRTY = 1 << 0U;
+  static const uint32_t UI_FLAG_MOUSE_OVER = 1 << 1U;
+  static const uint32_t UI_FLAG_MOUSE_LEAVE = 1 << 2U;
+
+  UiWidget() = default;
+  virtual ~UiWidget() = default;
+
   virtual UiExtent measure(const UiWidgetSpec& spec) = 0;
   virtual void layout(const UiRect& region) = 0;
   virtual void draw(UiPainter& painter) = 0;
 
-  void set_event_flag(uint32_t flag) { event_flags_ = event_flags_ | flag; }
-  void remove_event_flag(uint32_t flag) {
-    event_flags_ = event_flags_ & (~flag);
-  }
-  bool has_event_flag(uint32_t flag) const { return event_flags_ & flag; }
+  void set_flag(uint32_t flag) { flags_ = flags_ | flag; }
+  void remove_flag(uint32_t flag) { flags_ = flags_ & (~flag); }
+  bool is_flag(uint32_t flag) const { return flags_ & flag; }
 
   void set_bounds(const UiRect& bounds) { bounds_ = bounds; }
   const UiRect& bounds() const { return bounds_; }
 
  private:
-  uint32_t event_flags_ = 0;
+  uint32_t flags_ = 0;
   UiRect bounds_;
-};
 
-void ui_dispatch_mouse_event(UiWidget* widget);
-void ui_dispatch_keyboard_event(UiWidget* widget);
+  DISABLE_COPY_AND_MOVE(UiWidget)
+};
 
 }  // namespace framework
 

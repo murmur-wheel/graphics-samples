@@ -6,7 +6,7 @@
 #define FRAMEWORK_UTIL_H
 
 // clang-format off
-#include "util_common.h"
+#include "common.h"
 #include "ref_count.h"
 #include "wait_group.h"
 #include "event_queue.h"

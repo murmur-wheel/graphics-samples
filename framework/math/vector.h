@@ -27,7 +27,7 @@ template <typename T>
 struct Vec4T {
   T x = 0, y = 0, z = 0, w = 0;
   Vec4T() = default;
-  explicit Vec4T(T x, T y, T z, T w) : x(x), y(y), z(z), w(w) {}
+  explicit Vec4T(T _x, T _y, T _z, T _w) : x(_x), y(_y), z(_z), w(_w) {}
 };
 
 using Vec2f = Vec2T<float>;

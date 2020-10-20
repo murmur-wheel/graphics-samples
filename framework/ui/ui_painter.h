@@ -5,11 +5,7 @@
 #ifndef FRAMEWORK_UI_PAINTER_H
 #define FRAMEWORK_UI_PAINTER_H
 
-#include <cstdint>
-#include <vector>
-
-#include "../math/color.h"
-#include "../math/vector.h"
+#include "common.h"
 
 namespace framework {
 
@@ -26,9 +22,9 @@ struct UiDrawCommandList {
   };
 
   struct Vertex {
-    Vec2f pos;  // position
-    Vec2f tex;  // texture coordinate
-    Vec3f col;  // color
+    Vec2f position;  // position
+    Vec2f tex;       // texture coordinate
+    Vec3f color;     // color
   };
 
   std::vector<DrawCommand> commands;

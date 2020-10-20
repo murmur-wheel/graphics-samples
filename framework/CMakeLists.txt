@@ -1,14 +1,16 @@
 set(MATH_SOURCE_LIST
         math/color.h
         math/vector.h)
+source_group(math FILES ${MATH_SOURCE_LIST})
 
 set(UTIL_SOURCE_LIST
-        util/util_common.h
+        util/common.h
         util/wait_group.h
         util/ref_count.h
         util/event_queue.h
         util/event_queue.cpp
         util/util.h)
+source_group(util FILES ${UTIL_SOURCE_LIST})
 
 set(PLATFORM_SOURCE_LIST
         platform/mouse_event.h
@@ -17,6 +19,7 @@ set(PLATFORM_SOURCE_LIST
         platform/platform_window.h
         platform/platform.h
         platform/platform.cpp)
+source_group(platform FILES ${PLATFORM_SOURCE_LIST})
 
 set(VKUT_SOURCE_LIST
         vkut/vkut_tools.h
@@ -32,14 +35,17 @@ set(VKUT_SOURCE_LIST
         vkut/vkut_buffer.cpp
         vkut/vkut.h
         vkut/vkut.cpp)
+source_group(vkut FILES ${VKUT_SOURCE_LIST})
 
 set(UI_SOURCES
+        ui/common.h
         ui/ui_painter.h
         ui/ui_painter.cpp
         ui/ui_widget.h
         ui/ui_widget.cpp
         ui/ui_control.h
         ui/ui_control.cpp)
+source_group(ui FILES ${UI_SOURCES})
 
 add_library(framework STATIC
         ${UTIL_SOURCE_LIST}
