@@ -5,7 +5,7 @@
 #ifndef FRAMEWORK_UI_CONTROL_H
 #define FRAMEWORK_UI_CONTROL_H
 
-#include "ui_widget.h"
+#include "widget.h"
 
 namespace framework {
 class UiControl : public UiWidget {

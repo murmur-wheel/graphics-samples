@@ -8,7 +8,7 @@
 #include <cstdint>
 
 #include "common.h"
-#include "ui_painter.h"
+#include "painter.h"
 
 namespace framework {
 
