@@ -70,6 +70,13 @@ void vkut_InitDeviceApi(VkDevice device,
   api->NAME = reinterpret_cast<PFN_##NAME>(getDeviceProcAddr(device, #NAME))
 
   BIND_PROC(vkDestroyDevice);
+
+  BIND_PROC(vkCreateBuffer);
+  BIND_PROC(vkDestroyBuffer);
+
+  BIND_PROC(vkFreeMemory);
+  BIND_PROC(vkMapMemory);
+  BIND_PROC(vkUnmapMemory);
 #undef BIND_PROC
 }
 

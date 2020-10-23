@@ -5,7 +5,7 @@
 #include <math/matrix.h>
 #include <math/vector.h>
 #include <util/ref_count.h>
-#include <vkut/vkut_device.h>
+#include <vkut/device.h>
 
 #include <cstdio>
 

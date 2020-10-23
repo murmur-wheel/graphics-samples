@@ -45,6 +45,13 @@ struct VkutSurfaceApi {
 struct VkutDeviceApi {
   PFN_vkGetDeviceProcAddr vkGetDeviceProcAddr{nullptr};
   PFN_vkDestroyDevice vkDestroyDevice{nullptr};
+
+  PFN_vkCreateBuffer vkCreateBuffer{nullptr};
+  PFN_vkDestroyBuffer vkDestroyBuffer{nullptr};
+
+  PFN_vkFreeMemory vkFreeMemory{nullptr};
+  PFN_vkMapMemory vkMapMemory{nullptr};
+  PFN_vkUnmapMemory vkUnmapMemory{nullptr};
 };
 
 struct VkutSwapchainApi {
