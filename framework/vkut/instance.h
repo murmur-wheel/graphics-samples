@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-#include "vkut_api.h"
+#include "api.h"
 
 namespace framework {
 class VkutInstance {

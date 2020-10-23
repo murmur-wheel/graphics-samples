@@ -2,7 +2,7 @@
 // Created by murmur-wheel on 2020/9/19.
 //
 
-#include "vkut_device.h"
+#include "device.h"
 
 namespace framework {
 VkutDevice::~VkutDevice() {

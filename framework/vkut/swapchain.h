@@ -7,7 +7,7 @@
 
 #include <memory>
 
-#include "vkut_api.h"
+#include "api.h"
 
 namespace framework {
 class VkutSwapchain {};

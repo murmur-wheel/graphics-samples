@@ -5,12 +5,13 @@
 #ifndef FRAMEWORK_VKUT_H
 #define FRAMEWORK_VKUT_H
 
+#include "api.h"
+#include "buffer.h"
 #include "common.h"
-#include "vkut_api.h"
-#include "vkut_buffer.h"
-#include "vkut_device.h"
-#include "vkut_instance.h"
-#include "vkut_swapchain.h"
+#include "device.h"
+#include "instance.h"
+#include "swapchain.h"
+
 
 namespace framework {
 void vkut_CreateDeviceAndSwapchain(const VkutInstancePtr& instance,

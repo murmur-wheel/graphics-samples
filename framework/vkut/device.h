@@ -5,7 +5,7 @@
 #ifndef FRAMEWORK_VKUT_DEVICE_H
 #define FRAMEWORK_VKUT_DEVICE_H
 
-#include "vkut_instance.h"
+#include "instance.h"
 
 namespace framework {
 class VkutDevice {
