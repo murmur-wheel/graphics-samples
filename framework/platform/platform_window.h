@@ -9,8 +9,8 @@
 
 namespace framework {
 class PlatformWindow {
- public:
-  virtual void create_vk_surface() = 0;
+public:
+    virtual void create_vk_surface() = 0;
 };
 }  // namespace framework
 

@@ -14,19 +14,19 @@
 namespace framework {
 
 struct UiExtent {
-  int32_t width = 0;
-  int32_t height = 0;
+    int32_t width = 0;
+    int32_t height = 0;
 };
 
 struct UiRect {
-  int32_t left = 0, top = 0, right = 0, bottom = 0;
+    int32_t left = 0, top = 0, right = 0, bottom = 0;
 
-  UiExtent extent() const {
-    UiExtent extent;
-    extent.width = right - left;
-    extent.height = bottom - top;
-    return extent;
-  }
+    UiExtent extent() const {
+        UiExtent extent;
+        extent.width = right - left;
+        extent.height = bottom - top;
+        return extent;
+    }
 };
 
 struct UiRectF {};

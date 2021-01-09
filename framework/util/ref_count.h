@@ -11,23 +11,23 @@
 
 namespace framework {
 class RefCount {
- public:
-  RefCount() = default;
-  virtual ~RefCount() = default;
+public:
+    RefCount() = default;
+    virtual ~RefCount() = default;
 
-  int add_ref() { return ++count_; }
-  int sub_ref() { return --count_; }
+    int add_ref() { return ++count_; }
+    int sub_ref() { return --count_; }
 
- private:
-  int count_{1};
+private:
+    int count_{1};
 
-  DISABLE_COPY_AND_MOVE(RefCount)
+    DISABLE_COPY_AND_MOVE(RefCount)
 };
 
 template <typename T>
 class DefaultDx {
- public:
-  void operator()(T* ptr) { delete ptr; }
+public:
+    void operator()(T* ptr) { delete ptr; }
 };
 
 template <typename T, typename Dx = DefaultDx<T>>
@@ -35,112 +35,112 @@ class RefPtr;
 
 template <typename T>
 class RefPtr<T, DefaultDx<T>> {
- public:
-  static_assert(std::is_base_of<RefCount, T>(), "T must drive from RefCount");
+public:
+    static_assert(std::is_base_of<RefCount, T>(), "T must drive from RefCount");
 
-  using Self = RefPtr<T, DefaultDx<T>>;
+    using Self = RefPtr<T, DefaultDx<T>>;
 
-  RefPtr() = default;
-  explicit RefPtr(T* ptr) : ptr_(ptr) {}
-  ~RefPtr() { set(nullptr); }
+    RefPtr() = default;
+    explicit RefPtr(T* ptr) : ptr_(ptr) {}
+    ~RefPtr() { set(nullptr); }
 
-  RefPtr(const Self& other) : ptr_(nullptr) { set(other.ptr_); }
-  RefPtr(Self&& other) noexcept : ptr_(nullptr) {
-    ptr_ = other.ptr_;
-    other.ptr_ = nullptr;
-  }
-
-  RefPtr<T, DefaultDx<T>>& operator=(const Self& rhs) {
-    if (&rhs == this) {
-      return *this;
+    RefPtr(const Self& other) : ptr_(nullptr) { set(other.ptr_); }
+    RefPtr(Self&& other) noexcept : ptr_(nullptr) {
+        ptr_ = other.ptr_;
+        other.ptr_ = nullptr;
     }
 
-    set(rhs.ptr_);
-    return *this;
-  }
+    RefPtr<T, DefaultDx<T>>& operator=(const Self& rhs) {
+        if (&rhs == this) {
+            return *this;
+        }
 
-  RefPtr<T, DefaultDx<T>>& operator=(Self&& rhs) noexcept {
-    if (&rhs != this) {
-      set(nullptr);
-      ptr_ = rhs.ptr_;
-      rhs.ptr_ = nullptr;
+        set(rhs.ptr_);
+        return *this;
     }
 
-    return *this;
-  }
+    RefPtr<T, DefaultDx<T>>& operator=(Self&& rhs) noexcept {
+        if (&rhs != this) {
+            set(nullptr);
+            ptr_ = rhs.ptr_;
+            rhs.ptr_ = nullptr;
+        }
 
-  void set(T* ptr) {
-    if (ptr) {
-      ptr->add_ref();
+        return *this;
     }
 
-    if (ptr_ && ptr_->sub_ref() == 0) {
-      DefaultDx<T>()(ptr_);
-      ptr_ = nullptr;
+    void set(T* ptr) {
+        if (ptr) {
+            ptr->add_ref();
+        }
+
+        if (ptr_ && ptr_->sub_ref() == 0) {
+            DefaultDx<T>()(ptr_);
+            ptr_ = nullptr;
+        }
+
+        ptr_ = ptr;
     }
 
-    ptr_ = ptr;
-  }
+    T* operator->() const { return ptr_; }
 
-  T* operator->() const { return ptr_; }
-
- private:
-  T* ptr_{nullptr};
+private:
+    T* ptr_{nullptr};
 };
 
 template <typename T, typename Dx>
 class RefPtr {
- public:
-  static_assert(std::is_base_of<RefCount, T>(), "T must drive from RefCount");
+public:
+    static_assert(std::is_base_of<RefCount, T>(), "T must drive from RefCount");
 
-  using Self = RefPtr<T, Dx>;
+    using Self = RefPtr<T, Dx>;
 
-  RefPtr() = default;
-  RefPtr(const Self& other) : dx_(other.dx_) { set(other.ptr_); }
-  RefPtr(Self&& other) noexcept : ptr_(other.ptr_), dx_(std::move(other.dx_)) {}
-  ~RefPtr() { set(nullptr); }
+    RefPtr() = default;
+    RefPtr(const Self& other) : dx_(other.dx_) { set(other.ptr_); }
+    RefPtr(Self&& other) noexcept : ptr_(other.ptr_), dx_(std::move(other.dx_)) {}
+    ~RefPtr() { set(nullptr); }
 
-  RefPtr(T* ptr, Dx dx) : ptr_(ptr), dx_(std::move(dx)) { set(ptr); }
+    RefPtr(T* ptr, Dx dx) : ptr_(ptr), dx_(std::move(dx)) { set(ptr); }
 
-  RefPtr<T, Dx>& operator=(const Self& rhs) {
-    if (&rhs == this) {
-      return *this;
+    RefPtr<T, Dx>& operator=(const Self& rhs) {
+        if (&rhs == this) {
+            return *this;
+        }
+
+        set(rhs.ptr_);
+        return *this;
     }
 
-    set(rhs.ptr_);
-    return *this;
-  }
+    RefPtr<T, Dx>& operator=(Self&& rhs) noexcept {
+        if (&rhs != this) {
+            set(nullptr);
 
-  RefPtr<T, Dx>& operator=(Self&& rhs) noexcept {
-    if (&rhs != this) {
-      set(nullptr);
+            ptr_ = rhs.ptr_;
+            dx_ = std::move(rhs.dx_);
+            rhs.ptr_ = nullptr;
+        }
 
-      ptr_ = rhs.ptr_;
-      dx_ = std::move(rhs.dx_);
-      rhs.ptr_ = nullptr;
+        return *this;
     }
 
-    return *this;
-  }
+    void set(T* ptr) {
+        if (ptr) {
+            ptr->add_ref();
+        }
 
-  void set(T* ptr) {
-    if (ptr) {
-      ptr->add_ref();
+        if (ptr_ && ptr_->sub_ref() == 0) {
+            dx_(ptr_);
+            ptr_ = nullptr;
+        }
+
+        ptr_ = ptr;
     }
 
-    if (ptr_ && ptr_->sub_ref() == 0) {
-      dx_(ptr_);
-      ptr_ = nullptr;
-    }
+    T* operator->() const { return ptr_; }
 
-    ptr_ = ptr;
-  }
-
-  T* operator->() const { return ptr_; }
-
- private:
-  T* ptr_{nullptr};
-  Dx dx_;
+private:
+    T* ptr_{nullptr};
+    Dx dx_;
 };
 }  // namespace framework
 

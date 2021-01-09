@@ -9,8 +9,8 @@
 
 namespace framework {
 class UiControl : public UiWidget {
- public:
-  virtual void on_click() = 0;
+public:
+    virtual void on_click() = 0;
 };
 }  // namespace framework
 

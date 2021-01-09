@@ -6,7 +6,7 @@
 
 namespace framework {
 PlatformFactory* PlatformFactory::Get() {
-  static PlatformFactory factory;
-  return &factory;
+    static PlatformFactory factory;
+    return &factory;
 }
 }  // namespace framework

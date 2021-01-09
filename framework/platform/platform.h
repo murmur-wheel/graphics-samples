@@ -10,8 +10,8 @@ namespace framework {
 class PlatformWindow {};
 
 class PlatformFactory {
- public:
-  static PlatformFactory* Get();
+public:
+    static PlatformFactory* Get();
 };
 }  // namespace framework
 

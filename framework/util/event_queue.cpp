@@ -7,8 +7,8 @@
 namespace framework {
 
 void example() {
-  auto mgr = EventQueue::Get();
-  mgr->send(nullptr, nullptr);
+    auto mgr = EventQueue::Get();
+    mgr->send(nullptr, nullptr);
 }
 
 }  // namespace framework

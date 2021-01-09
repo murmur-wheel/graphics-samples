@@ -10,43 +10,40 @@
 namespace framework {
 
 struct RectF {
-  float left = 0, top = 0, right = 0, bottom = 0;
+    float left = 0, top = 0, right = 0, bottom = 0;
 };
 
 struct UiDrawCommandList {
-  struct DrawCommand {
-    uint32_t first_vertex = 0;
-    uint32_t first_index = 0;
-    uint32_t index_count = 0;
-    uint32_t texture = 0;
-  };
+    struct DrawCommand {
+        uint32_t first_vertex = 0;
+        uint32_t first_index = 0;
+        uint32_t index_count = 0;
+        uint32_t texture = 0;
+    };
 
-  struct Vertex {
-    Vec2f position;  // position
-    Vec2f tex;       // texture coordinate
-    Vec3f color;     // color
-  };
+    struct Vertex {
+        Vec2f position;  // position
+        Vec2f tex;       // texture coordinate
+        Vec3f color;     // color
+    };
 
-  std::vector<DrawCommand> commands;
-  std::vector<Vertex> vertices;
-  std::vector<uint16_t> indices;
+    std::vector<DrawCommand> commands;
+    std::vector<Vertex> vertices;
+    std::vector<uint16_t> indices;
 };
 
 class UiPainter {
- public:
-  void push_clip(const RectF& rect);
-  void pop_clip();
+public:
+    void push_clip(const RectF& rect);
+    void pop_clip();
 
-  void draw_rectangle(const RectF& rect, const Vec4f& color);
-  void fill_rectangle(const RectF& rect, const Vec4f& color,
-                      float stroke_width = 1.0f);
+    void draw_rectangle(const RectF& rect, const Vec4f& color);
+    void fill_rectangle(const RectF& rect, const Vec4f& color, float stroke_width = 1.0f);
 
-  const UiDrawCommandList& draw_command_list() const {
-    return draw_command_list_;
-  }
+    const UiDrawCommandList& draw_command_list() const { return draw_command_list_; }
 
- private:
-  UiDrawCommandList draw_command_list_;
+private:
+    UiDrawCommandList draw_command_list_;
 };
 }  // namespace framework
 

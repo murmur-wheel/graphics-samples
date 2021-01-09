@@ -10,15 +10,14 @@ namespace framework {
 namespace detail {}
 
 class EventQueue {
- public:
-  void add_connection(void* sender, void* signal, void* receiver, void* slot);
-  void remove_connection(void* sender, void* signal, void* receiver,
-                         void* slot);
-  void send(void* sender, void* signal);
+public:
+    void add_connection(void* sender, void* signal, void* receiver, void* slot);
+    void remove_connection(void* sender, void* signal, void* receiver, void* slot);
+    void send(void* sender, void* signal);
 
-  static EventQueue* Get();
+    static EventQueue* Get();
 
- private:
+private:
 };
 }  // namespace framework
 
