@@ -5,21 +5,21 @@
 #include <math/matrix.h>
 #include <math/vector.h>
 #include <util/ref_count.h>
-#include <vkut/device.h>
+#include <vk/api.h>
+#include <vk/device.h>
 
 #include <cstdio>
 
 namespace fw = framework;
 
 class MyObject final : public fw::RefCount {
- public:
-  ~MyObject() override { printf("MyObject::~MyObject()\n"); }
+public:
+    ~MyObject() override { printf("MyObject::~MyObject()\n"); }
 };
 
 int main() {
-  const framework::Vec2f v2f(1, 2);
-  const auto sum2f = v2f + v2f;
-  printf("sum = [%f, %f]\n", sum2f.x, sum2f.y);
-
-  framework::Mat3f m3f;
+    fw::vk::init_api();
+    for (const auto& layer : fw::vk::Device::enumerate_instance_layers()) {
+        printf("%s\n", layer.layerName);
+    }
 }

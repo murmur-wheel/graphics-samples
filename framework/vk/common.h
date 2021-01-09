@@ -6,6 +6,7 @@
 #include <exception>
 #include <memory>
 #include <stdexcept>
+#include <vector>
 
 #define VK_CHECK_RESULT(expr)                \
     do {                                     \
