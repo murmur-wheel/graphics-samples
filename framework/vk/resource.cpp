@@ -2,7 +2,7 @@
 
 namespace framework::vk {
 Buffer::Buffer(std::shared_ptr<Device> device, VkDeviceSize size, VkBufferUsageFlags usage)
-    : device_(std::move(device)) {
+    : Resource(std::move(device)) {
     VkBufferCreateInfo buffer_create_info = {};
     buffer_create_info.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
     buffer_create_info.size = size;

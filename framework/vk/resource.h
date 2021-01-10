@@ -5,7 +5,17 @@
 #include "device.h"
 
 namespace framework::vk {
-class Buffer {
+
+class Resource {
+public:
+    explicit Resource(std::shared_ptr<Device> device) : device_(std::move(device)) {}
+    const std::shared_ptr<Device>& device() const { return device_; }
+
+protected:
+    std::shared_ptr<Device> device_;
+};
+
+class Buffer : public Resource {
 public:
     explicit Buffer(std::shared_ptr<Device> device, VkDeviceSize size, VkBufferUsageFlags usage);
     ~Buffer();
@@ -13,14 +23,21 @@ public:
     void update(VkDeviceSize offset, VkDeviceSize length, const void* data);
 
 private:
-    std::shared_ptr<Device> device_;
     VkBuffer vk_buffer_{VK_NULL_HANDLE};
     VkDeviceMemory vk_device_memory_{VK_NULL_HANDLE};
 };
 
-class Image {};
+class Image : public Resource {
+public:
+    explicit Image(std::shared_ptr<Device> device);
+};
 
-class ImageView {};
+class ImageView : public Resource {
+public:
+    explicit ImageView(std::shared_ptr<Image> image);
+
+private:
+};
 
 class FrameBuffer {};
 
