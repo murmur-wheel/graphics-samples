@@ -18,7 +18,7 @@ public:
 };
 
 int main() {
-    fw::vk::init_api();
+    fw::vk::init_registry_api();
     for (const auto& layer : fw::vk::Device::enumerate_instance_layers()) {
         printf("%s\n", layer.layerName);
     }

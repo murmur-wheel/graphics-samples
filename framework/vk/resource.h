@@ -37,11 +37,18 @@ public:
     explicit ImageView(std::shared_ptr<Image> image);
 
 private:
+    std::shared_ptr<Image> image_;
 };
 
-class FrameBuffer {};
+class FrameBuffer : public Resource {
+public:
+    FrameBuffer();
+};
 
-class ShaderModule {};
+class ShaderModule : public Resource {
+public:
+    ShaderModule(std::shared_ptr<Device> device);
+};
 }  // namespace framework::vk
 
 #endif
